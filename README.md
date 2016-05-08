@@ -15,6 +15,7 @@ That project is the final project to Java Fundamentals class on FIAP MBA - JAVA,
 - jUnit (4.12)
 - Cucumber-jUnit (1.2.4)
 - Hamcrest (1.3)
+- Jackson (2.0.2)
 - Eclipse IDE (Mars.2)
  
 ## Installation:
