@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="lib" path="lib/cucumber-junit-1.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.7.4.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.7.4.jar"/>

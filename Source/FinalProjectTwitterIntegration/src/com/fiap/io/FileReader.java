@@ -1,33 +1,23 @@
 package com.fiap.io;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class FileReader<T> {
+public class FileReader {
 
-	protected String filePath;
-	private File file;
+	private Path path;
 
 	public FileReader(String filePath) {
-		this.filePath = filePath;
+		path = Paths.get(filePath);
 	}
 
-	protected void openFile() {
-
-	}
-
-	protected void closeFile() {
-
-	}
-
-	protected T getFile() {
-		return null;
-	}
-
-	protected void setFile(File file) {
-
-	}
-
-	protected void setFile(String filePath) {
-
+	protected List<String> getListContent() throws IOException {
+		return Files.newBufferedReader(path, StandardCharsets.ISO_8859_1)
+					.lines().collect(Collectors.toList());
 	}
 }

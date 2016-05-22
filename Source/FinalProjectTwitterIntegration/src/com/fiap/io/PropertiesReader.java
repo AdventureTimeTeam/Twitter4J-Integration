@@ -1,12 +1,16 @@
 package com.fiap.io;
 
-public class PropertiesReader extends FileReader<Object> {
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
-	public PropertiesReader(String filePath) {
-		super(filePath);
-	}
+public class PropertiesReader {
 
-	public void setProperties(){
-		
+	public void loadProperties() throws IOException{
+		Properties prop = new Properties();
+		InputStream in = getClass().getResourceAsStream("/resources/properties.properties");
+		prop.load(in);
+		System.setProperties(prop);
+		in.close();
 	}
 }

@@ -1,25 +1,24 @@
 package com.fiap.io;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
-public class TwitterFileReader<T> extends FileReader<Object> {
+import com.fiap.model.Tweet;
 
-	public TwitterFileReader(String filePath) {
-		super(filePath);
+public class TwitterFileReader extends FileReader {
+
+	public TwitterFileReader() {
+		super("c:\\Temp\\twitter-files\\");
 	}
 
-	@Override
-	public T getFile(){
+	public List<Tweet> getTweets() throws IOException{
+		List<String> content = super.getListContent();
+		Tweet tweet;
+		for(String line : content){
+			tweet = new Tweet();
+			
+		}
+		
 		return null;
-	}
-	
-	@Override
-	public void setFile(String fileJson){
-		
-	}
-	
-	@Override
-	public void setFile(File file){
-		
 	}
 }
