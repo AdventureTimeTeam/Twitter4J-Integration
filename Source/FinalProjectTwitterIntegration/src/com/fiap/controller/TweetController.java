@@ -1,17 +1,41 @@
 package com.fiap.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fiap.model.TwitterData;
 
 import twitter4j.Status;
+import twitter4j.Twitter;
 
 public class TweetController {
 
 	private TwitterData twitterData = new TwitterData();
+	private List<Status> tweets = new ArrayList<>();
+	
+	public void searchBy(){
+		TwitterService t = TwitterService.getConnection(
+				"3QRfILThjzQslxSRLps8u3tDv", "exr4sElb7yLxXomoqNyo9aDLc29FoTnnAfia8c34Nzv1V4p5ED");
+		try {
+			Twitter twitter = t.userAuthentication(
+					"729051384688066560-mR8PP2fslrG0fRCen6QYWhQ1gpTFcV2", "iv8Nl75gAw0smCSMdVmlwGXViMMpD6VeEgNeAn7btFqIs");
+		
+			TweetSearch tweetSearch = new TweetSearch(twitter);
+			tweets = tweetSearch.getTweetsFromTheLast7days("#java");
+			tweetSearch.save();
+			long numOfRetweets = tweets.stream().filter(tweet -> tweet.isRetweet()).count();
+			long numOfTweets = tweets.stream().filter(tweet -> !tweet.isRetweet()).count();
+			long numOfFavorites = tweets.stream().filter(tweet -> !tweet.isFavorited()).count();
+			System.out.println("Total:"+tweets.size()+"\nRetweets: "+numOfRetweets+"\nTweets: "+numOfTweets+"\nFavorite: "+numOfFavorites);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
 	public int getAmountTweetsFromLastWeek(){
-		return -1;
+		return tweets.size();
 	}
 	
 	public int getAmountReTweetsFromLastWeek(){
