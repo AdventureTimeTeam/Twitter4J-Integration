@@ -25,6 +25,11 @@ public class TwitterService {
 		this.consumerSecret = consumerSecret;
 	}
 	
+	public TwitterService(){
+		this.consumerKey = "3QRfILThjzQslxSRLps8u3tDv";
+		this.consumerSecret = "exr4sElb7yLxXomoqNyo9aDLc29FoTnnAfia8c34Nzv1V4p5ED";
+	}
+	
 	public static TwitterService getConnection(String consumerKey, String consumerSecret){
 		return new TwitterService(consumerKey, consumerSecret);
 		 
