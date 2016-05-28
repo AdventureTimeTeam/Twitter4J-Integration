@@ -1,5 +1,12 @@
 package com.fiap.utils;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -37,6 +44,28 @@ public class MyUtils {
 		return input;
 	}
 
+	public static String getLastWeekDateStart(){
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+		LocalDate date = getCalendarLastWeek().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return date.format(format);
+	}
+	
+	public static String getLastWeekDateEnd(){
+		Calendar c = getCalendarLastWeek();
+		c.add(Calendar.DATE, 6);
+		LocalDate date = c.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return date.format(DateTimeFormatter.ofPattern("uuuu-MM-dd"));
+	}
+	
+	private static Calendar getCalendarLastWeek(){
+		Date date = new Date();
+	    Calendar c = Calendar.getInstance();
+	    c.setTime(date);
+	    int i = c.get(Calendar.DAY_OF_WEEK) - c.getFirstDayOfWeek();
+	    c.add(Calendar.DATE, -i - 7);
+	    
+	    return c;
+	}
 }	
 	
 	
