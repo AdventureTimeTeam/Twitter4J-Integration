@@ -7,7 +7,7 @@ import twitter4j.Query;
 public class TweetQuery {
 
 	public Query getQueryLastWeek() {
-		Query query = new Query("#megsauro");
+		Query query = new Query("#javaone");
 		String since = MyUtils.getLastWeekDateStart();
 		String until = MyUtils.getLastWeekDateEnd();
 		query.setSince(since);

@@ -25,11 +25,11 @@ public class TweetController {
 	
 	
 	public ArrayList<Status> getAllTweets(Query query) throws IOException {
-		try {
-			
-			while (true) {
+		try {			
+			QueryResult result = null;
+			do {
 				try {
-					QueryResult result = currentTwitterInstance.search(query);
+					result = currentTwitterInstance.search(query);
 					tweets.addAll(result.getTweets());
 					System.out.println("Getting tweets " + tweets.size() + "...");
 				} catch (TwitterException e) {
@@ -37,7 +37,8 @@ public class TweetController {
 					if (currentTwitterInstance == null)
 						break;
 				}
-			}			
+			}
+			while((query = result.nextQuery()) != null);
 		} catch (Exception e) {
 			System.out.println("Ops! You need to wait at least 15 minutes!"); 
 		}
@@ -47,10 +48,11 @@ public class TweetController {
 			String output = "\nUser: " + status.getUser().getScreenName() + "\nText: " + status.getText()
 					+ "\nDate: " + status.getCreatedAt() + "\nFavorite: " + status.getFavoriteCount() 
 					+ "\nRetweet: " + status.getRetweetCount();
-			file.write(output);
+			file.write(output);			
 		}
+		file.close();
 			
-		return tweets;
+		return (ArrayList<Status>)tweets.stream().distinct().collect(Collectors.toList());
 	}
 
 	public long getAmountTweetsFromLastWeek() {
@@ -62,14 +64,15 @@ public class TweetController {
 	}
 
 	public long getAmountFavoritesFromLastWeek() {
-		return tweets.stream().filter(t -> t.isFavorited()).count();
+		return tweets.stream().filter(t -> t.getFavoriteCount() > 0).count();
 	}
 
-	public List<Status> getAuthorTwitterSorted() {
+	public List<Status> getAuthorTwitterSorted() {		
 		return tweets.stream()
 				.sorted((e1, e2) -> e1.getUser().getName()
 						.compareTo(e2.getUser().getName()))
 				.collect(Collectors.toList());
+							
 	}
 
 	public List<Status> getDateTwitterSorted() {
@@ -80,7 +83,12 @@ public class TweetController {
 	}
 
 	public void tweet(String message) throws TwitterException {
-		currentSenderInstance.updateStatus(message);
+		try{
+			currentSenderInstance.updateStatus(message);
+		}
+		catch(TwitterException ex){
+			System.out.println("You cannot send the same message more than one time!");
+		}
 	}
 
 	public void sincronizeIoT() {
